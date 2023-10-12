@@ -56,8 +56,7 @@ class PlayAudioProvider extends ChangeNotifier {
         updateSongPlayingStatus(true);
 
         await _justAudioPlayer.play();
-      } else if (_justAudioPlayer.processingState ==
-          ProcessingState.completed) {
+      } else if (_justAudioPlayer.processingState == ProcessingState.completed) {
         _reset();
       }
     } catch (e) {

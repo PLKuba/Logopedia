@@ -97,17 +97,6 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
     final _recordProvider = Provider.of<RecordAudioProviders>(context);
     final _playProvider = Provider.of<PlayAudioProvider>(context);
     final _playExampleProvider = Provider.of<PlayExampleAudioProvider>(context);
-    final _cardProvider = Provider.of<CardProvider>(context);
-
-    if (!_cardProvider.areCardsLeft) {
-      return const Center(
-        child: Text(
-          'No more cards left',
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-      );
-    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -153,7 +142,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   }
 
   _displayImageSection() {
-    return Image.asset(widget.imagePath, height: 200,width: 200);
+    return Image.asset(widget.imagePath, height: 200, width: 200);
   }
 
   _playExampleHeading() {

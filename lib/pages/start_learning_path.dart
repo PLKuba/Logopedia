@@ -39,8 +39,7 @@ class StartLearning extends StatelessWidget {
         children: words
             .map((word) => MultiProvider(
                   providers: [
-                    ChangeNotifierProvider(
-                        create: (_) => RecordAudioProviders()),
+                    ChangeNotifierProvider(create: (_) => RecordAudioProviders()),
                     ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
                     ChangeNotifierProvider(create: (_) => PlayExampleAudioProvider()),
                   ],
