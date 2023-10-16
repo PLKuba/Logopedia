@@ -25,7 +25,8 @@ class EntryPage extends StatelessWidget {
           decoration: BoxDecoration(border: Border.all(color: Colors.red)),
           child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/startLearning');
+                Navigator.of(context).pushNamedAndRemoveUntil('/startLearning', (Route<dynamic> route) => false);
+                // Navigator.pushNamed(context, '/startLearning');
               },
               child: const Text('Start Learning')),
         )
