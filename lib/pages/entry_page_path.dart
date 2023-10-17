@@ -26,7 +26,6 @@ class EntryPage extends StatelessWidget {
           child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil('/startLearning', (Route<dynamic> route) => false);
-                // Navigator.pushNamed(context, '/startLearning');
               },
               child: const Text('Start Learning')),
         )

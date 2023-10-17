@@ -3,6 +3,7 @@ import 'package:logopedia/providers/play_audio_provider.dart';
 import 'package:logopedia/providers/record_audio_provider.dart';
 import 'package:logopedia/providers/card_provider.dart';
 import 'package:logopedia/screens/record_and_play_audio.dart';
+import 'package:logopedia/pages/game_summary_page.dart';
 import 'package:provider/provider.dart';
 
 class StartLearning extends StatelessWidget {
@@ -30,12 +31,11 @@ class StartLearning extends StatelessWidget {
 
   Widget buildCards(BuildContext context) {
     final provider = Provider.of<CardProvider>(context);
-    final position = provider.position;
     final words = provider.words;
     final paths = provider.paths;
     final imagePaths = provider.imagePaths;
 
-    return Stack(
+    return words.isEmpty ? const GameSummaryPage() : Stack(
         children: words
             .map((word) => MultiProvider(
                   providers: [
