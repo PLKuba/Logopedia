@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logopedia/pages/start_learning_path.dart';
 import 'package:logopedia/pages/entry_page_path.dart';
 import 'package:logopedia/pages/game_summary_page.dart';
-
+import 'package:logopedia/models/swipe_summary.dart';
 void main() {
   runApp(
     const MaterialApp(
@@ -20,7 +20,7 @@ class EntryRoot extends StatelessWidget {
         title: 'Logopedia App',
         home: const EntryPage(),
         routes: {
-          '/startLearning': (context) => const StartLearning(),
+          '/startLearning': (context) => StartLearning(entryRootContext: context,),
           '/entryPage': (context) => const EntryPage(),
         });
   }

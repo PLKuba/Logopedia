@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:logopedia/models/swipe_summary.dart';
+import 'package:logopedia/providers/game_data_provider.dart';
 import 'package:logopedia/providers/play_audio_provider.dart';
 import 'package:logopedia/providers/record_audio_provider.dart';
 import 'package:logopedia/providers/card_provider.dart';
@@ -14,14 +16,16 @@ class RecordAndPlayScreen extends StatefulWidget {
   final String path;
   final String imagePath;
   final bool isFront;
+  final GameDataProvider gameDataProvider;
 
-  const RecordAndPlayScreen({
-    Key? key,
-    required this.word,
-    required this.path,
-    required this.imagePath,
-    required this.isFront,
-  }) : super(key: key);
+  const RecordAndPlayScreen(
+      {Key? key,
+      required this.word,
+      required this.path,
+      required this.imagePath,
+      required this.isFront,
+      required this.gameDataProvider})
+      : super(key: key);
 
   @override
   State<RecordAndPlayScreen> createState() => _RecordAndPlayScreenState();
@@ -89,7 +93,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
         onPanEnd: (details) {
           final provider = Provider.of<CardProvider>(context, listen: false);
 
-          provider.endPosition(details);
+          provider.endPosition(details, widget.gameDataProvider);
         },
       );
 

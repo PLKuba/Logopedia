@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logopedia/pages/game_summary_page.dart';
+import 'package:logopedia/providers/game_data_provider.dart';
 
 enum WordStatus { correct, incorrect, mid }
 
@@ -11,7 +13,7 @@ class CardProvider extends ChangeNotifier {
   double _angle = 0;
   bool _isDragging = false;
   Size _screenSize = Size.zero;
-  
+
 
   List<String> get words => _words;
   List<String> get paths => _paths;
@@ -46,7 +48,7 @@ class CardProvider extends ChangeNotifier {
     print('Update Position ${details.globalPosition}');
   }
 
-  void endPosition(DragEndDetails details) {
+  void endPosition(DragEndDetails details, GameDataProvider gameDataProvider) {
     _isDragging = false;
 
     final status = getStatus();
@@ -56,17 +58,21 @@ class CardProvider extends ChangeNotifier {
       Fluttertoast.showToast(
         msg: status.toString().split('.').last.toUpperCase(),
       );
+      
     }
 
     switch (status) {
       case WordStatus.correct:
         correctSwipe();
+        gameDataProvider.swipeSummary.addCorrectSwipe();
         break;
       case WordStatus.incorrect:
         incorrectSwipe();
+        gameDataProvider.swipeSummary.addIncorrectSwipe();
         break;
       case WordStatus.mid:
         midSwipe();
+        gameDataProvider.swipeSummary.addMidSwipe();
         break;
       default:
         resetPosition();
@@ -108,6 +114,8 @@ class CardProvider extends ChangeNotifier {
     print(_position);
     _nextCard();
 
+    // swipeSummary.addCorrectSwipe();
+
     notifyListeners();
   }
 
@@ -115,6 +123,9 @@ class CardProvider extends ChangeNotifier {
     _angle = -20;
     _position -= Offset(_screenSize.width, 0);
     _nextCard();
+
+    // swipeSummary.addIncorrectSwipe();
+
     notifyListeners();
   }
 
@@ -122,6 +133,9 @@ class CardProvider extends ChangeNotifier {
     _angle = 0;
     _position -= Offset(0, _screenSize.height);
     _nextCard();
+
+    // swipeSummary.addMidSwipe();
+
     notifyListeners();
   }
 
