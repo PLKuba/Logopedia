@@ -27,8 +27,8 @@ class GameSummaryPage extends StatelessWidget {
               child: const Text('Go back to main page')),
           ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/', (Route<dynamic> route) => false); // this will move me back to the start of the swiping game
+                Navigator.of(entryRootContext).pushNamedAndRemoveUntil(
+                    '/startLearning', (Route<dynamic> route) => false); // this will move me back to the start of the swiping game
                     // add route to entry page
               },
               child: const Text('Try again'))

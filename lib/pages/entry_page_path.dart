@@ -5,32 +5,31 @@ class EntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return entryPage(context);
+    return Material(child: entryPage(context));
   }
 
   Widget entryPage(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-            // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-            width: MediaQuery.of(context).size.width,
-            height: 200),
-        Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-          child: const Text(
-            'Logopedia',
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-          child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil('/startLearning', (Route<dynamic> route) => false);
-              },
-              child: const Text('Start Learning')),
-        )
-      ],
-      // change background to white
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 200),
+              const Text('Logopedia', style: TextStyle(color: Colors.black, fontSize: 50),),
+              const SizedBox(height: 50,),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/startLearning', (Route<dynamic> route) => false);
+                },
+                child: const Text('Start Learning'),
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.lightBlueAccent),
+              ),)
+        ],
+      ),
     );
   }
 }

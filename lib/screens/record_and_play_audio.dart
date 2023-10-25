@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-// import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:logopedia/models/swipe_summary.dart';
 import 'package:logopedia/providers/game_data_provider.dart';
 import 'package:logopedia/providers/play_audio_provider.dart';
 import 'package:logopedia/providers/record_audio_provider.dart';
@@ -260,7 +258,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
     final _playProvider = Provider.of<PlayExampleAudioProvider>(context);
     final _playProviderWithoutListeners =
         Provider.of<PlayExampleAudioProvider>(context, listen: false);
-    print(widget.path);
+    // print(widget.path);
     return IconButton(
         onPressed: () async {
           if (songPath.isEmpty) return;

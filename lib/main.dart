@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logopedia/pages/start_learning_path.dart';
 import 'package:logopedia/pages/entry_page_path.dart';
-import 'package:logopedia/pages/game_summary_page.dart';
-import 'package:logopedia/models/swipe_summary.dart';
+
 void main() {
   runApp(
     const MaterialApp(

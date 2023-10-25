@@ -119,7 +119,7 @@ class PlayExampleAudioProvider extends ChangeNotifier {
 
       if (_audioFilePath != incomingAudioFile.path) {
         setAudioFilePath(incomingAudioFile.path);
-        print('incomingAudioFile.path: ${incomingAudioFile.path}');
+        // print('incomingAudioFile.path: ${incomingAudioFile.path}');
         await _justAudioPlayer.setAsset(incomingAudioFile.path);
         updateSongPlayingStatus(true);
         await _justAudioPlayer.play();

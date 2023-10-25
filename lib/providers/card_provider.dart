@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:logopedia/pages/game_summary_page.dart';
 import 'package:logopedia/providers/game_data_provider.dart';
 
 enum WordStatus { correct, incorrect, mid }
@@ -34,7 +33,7 @@ class CardProvider extends ChangeNotifier {
     _isDragging = true;
     notifyListeners();
 
-    print('Start Position ${details.globalPosition}');
+    // print('Start Position ${details.globalPosition}');
   }
 
   void updatePosition(DragUpdateDetails details) {
@@ -45,7 +44,7 @@ class CardProvider extends ChangeNotifier {
 
     notifyListeners();
 
-    print('Update Position ${details.globalPosition}');
+    // print('Update Position ${details.globalPosition}');
   }
 
   void endPosition(DragEndDetails details, GameDataProvider gameDataProvider) {
@@ -80,7 +79,7 @@ class CardProvider extends ChangeNotifier {
 
     // resetPosition();
 
-    print('End Position velocity ${details.velocity}');
+    // print('End Position velocity ${details.velocity}');
   }
 
   void resetPosition() {
@@ -103,15 +102,17 @@ class CardProvider extends ChangeNotifier {
       return WordStatus.incorrect;
     } else if (y <= -delta / 2 && forceMid) {
       return WordStatus.mid;
+    }else{
+      return null;
     }
   }
 
   // iPhone 14 Pro _screenSize: Size(393.0, 852.0)
   void correctSwipe() {
     _angle = 20;
-    print(_position);
+    // print(_position);
     _position += Offset(_screenSize.width, 0);
-    print(_position);
+    // print(_position);/
     _nextCard();
 
     // swipeSummary.addCorrectSwipe();
