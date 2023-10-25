@@ -9,20 +9,24 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
+//ignore: must_be_immutable
 class RecordAndPlayScreen extends StatefulWidget {
   final String word;
   final String path;
   final String imagePath;
   final bool isFront;
   final GameDataProvider gameDataProvider;
+  // modify state to avoid overriding error
+  bool swipable;
 
-  const RecordAndPlayScreen(
+  RecordAndPlayScreen(
       {Key? key,
       required this.word,
       required this.path,
       required this.imagePath,
       required this.isFront,
-      required this.gameDataProvider})
+      required this.gameDataProvider,
+      this.swipable = false})
       : super(key: key);
 
   @override
@@ -80,18 +84,23 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
           },
         ),
         onPanStart: (details) {
-          final provider = Provider.of<CardProvider>(context, listen: false);
-          provider.startPosition(details);
+          if (widget.swipable) {
+            final provider = Provider.of<CardProvider>(context, listen: false);
+            provider.startPosition(details);
+          }
         },
         onPanUpdate: (details) {
-          final provider = Provider.of<CardProvider>(context, listen: false);
-
-          provider.updatePosition(details);
+          if (widget.swipable) {
+            final provider = Provider.of<CardProvider>(context, listen: false);
+            provider.updatePosition(details);
+          }
         },
         onPanEnd: (details) {
-          final provider = Provider.of<CardProvider>(context, listen: false);
+          if (widget.swipable) {
+            final provider = Provider.of<CardProvider>(context, listen: false);
 
-          provider.endPosition(details, widget.gameDataProvider);
+            provider.endPosition(details, widget.gameDataProvider);
+          }
         },
       );
 
@@ -205,7 +214,9 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
     if (_recordProvider.isRecording) {
       return InkWell(
         customBorder: const CircleBorder(),
-        onTap: () async => await _recordProviderWithoutListener.stopRecording(),
+        onTap: () async {
+          await _recordProviderWithoutListener.stopRecording();
+        },
         child: RippleAnimation(
           repeat: true,
           color: const Color.fromARGB(255, 220, 220, 220),
@@ -229,10 +240,9 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
       height: 70,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: const Color(0xffF5F5F5),
-        borderRadius: BorderRadius.circular(100)),
-        child: const Icon(Icons.mic_none_outlined,
-        size: 30, color: Colors.black),
+          color: const Color(0xffF5F5F5),
+          borderRadius: BorderRadius.circular(100)),
+      child: const Icon(Icons.mic_none_outlined, size: 30, color: Colors.black),
     );
   }
 

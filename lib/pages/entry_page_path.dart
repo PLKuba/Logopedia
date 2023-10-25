@@ -26,7 +26,7 @@ class EntryPage extends StatelessWidget {
                 },
                 child: const Text('Start Learning'),
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.lightBlueAccent),
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.black),
               ),)
         ],
       ),
