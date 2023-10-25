@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logopedia/providers/game_data_provider.dart';
 import 'package:logopedia/providers/play_audio_provider.dart';
 import 'package:logopedia/providers/record_audio_provider.dart';
 import 'package:logopedia/providers/card_provider.dart';
@@ -11,7 +12,12 @@ class StartLearning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return startLearning(context);
+    return MaterialApp(
+      home: startLearning(context),
+      routes: {
+        'startLearning/gameSummary': (context) => const GameSummaryPage(),
+      }
+    );
   }
 
   Widget startLearning(BuildContext context) {
@@ -35,13 +41,16 @@ class StartLearning extends StatelessWidget {
     final paths = provider.paths;
     final imagePaths = provider.imagePaths;
 
-    return words.isEmpty ? const GameSummaryPage() : Stack(
+    return words.isEmpty ? 
+        const GameSummaryPage() 
+        : Stack(
         children: words
             .map((word) => MultiProvider(
                   providers: [
                     ChangeNotifierProvider(create: (_) => RecordAudioProviders()),
                     ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
                     ChangeNotifierProvider(create: (_) => PlayExampleAudioProvider()),
+                    ChangeNotifierProvider(create: (_) => GameDataProvider()),
                   ],
                   builder: (context, child) {
                     return RecordAndPlayScreen(

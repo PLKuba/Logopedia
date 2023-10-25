@@ -346,9 +346,9 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
             borderRadius: BorderRadius.circular(100),
             color: Colors.black,
           ),
-          child: Row(
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(Icons.refresh_outlined, color: Colors.white, size: 30),
               SizedBox(width: 10),
               Text(

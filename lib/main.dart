@@ -22,7 +22,6 @@ class EntryRoot extends StatelessWidget {
         routes: {
           '/startLearning': (context) => const StartLearning(),
           '/entryPage': (context) => const EntryPage(),
-          '/gameSummary': (context) => const GameSummaryPage(),
         });
   }
 }

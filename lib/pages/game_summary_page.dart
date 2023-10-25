@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 
+
 class GameSummaryPage extends StatelessWidget {
   const GameSummaryPage({Key? key}) : super(key: key);
-
-  @override
+  
+    @override
   Widget build(BuildContext context) {
-    return gameSummaryPage(context);
-  }
-
-  Widget gameSummaryPage(BuildContext context) {
-    return const Scaffold(
-      body: Text('Game Summary Page'),
-    );
+    return const Text('Game summary page');
   }
 }
+
+// Navigator.of(context).pushNamedAndRemoveUntil('/startLearning/GameSummary', (Route<dynamic> route) => false);

@@ -11,7 +11,7 @@ class CardProvider extends ChangeNotifier {
   double _angle = 0;
   bool _isDragging = false;
   Size _screenSize = Size.zero;
-  bool _isLastSetOfCards = false;
+  
 
   List<String> get words => _words;
   List<String> get paths => _paths;
@@ -19,7 +19,6 @@ class CardProvider extends ChangeNotifier {
   Offset get position => _position;
   bool get isDragging => _isDragging;
   double get angle => _angle;
-  bool get isLastSetOfCards => _isLastSetOfCards;
 
   CardProvider() {
     resetWords();
