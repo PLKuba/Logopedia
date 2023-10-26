@@ -84,23 +84,16 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
           },
         ),
         onPanStart: (details) {
-          if (widget.swipable) {
-            final provider = Provider.of<CardProvider>(context, listen: false);
-            provider.startPosition(details);
-          }
+          final provider = Provider.of<CardProvider>(context, listen: false);
+          provider.startPosition(details);
         },
         onPanUpdate: (details) {
-          if (widget.swipable) {
-            final provider = Provider.of<CardProvider>(context, listen: false);
-            provider.updatePosition(details);
-          }
+          final provider = Provider.of<CardProvider>(context, listen: false);
+          provider.updatePosition(details);
         },
         onPanEnd: (details) {
-          if (widget.swipable) {
-            final provider = Provider.of<CardProvider>(context, listen: false);
-
-            provider.endPosition(details, widget.gameDataProvider);
-          }
+          final provider = Provider.of<CardProvider>(context, listen: false);
+          provider.endPosition(details, widget.gameDataProvider);
         },
       );
 
