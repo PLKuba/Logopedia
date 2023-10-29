@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:logopedia/pages/start_learning_path.dart';
 import 'package:logopedia/pages/entry_page_path.dart';
+import 'package:logopedia/pages/record_own_sample.dart';
+import 'package:logopedia/providers/card_sample_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:logopedia/models/card_sample.dart';
 
 void main() {
   runApp(
@@ -15,12 +19,18 @@ class EntryRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Logopedia App',
-        home: const EntryPage(),
-        routes: {
-          '/startLearning': (context) => StartLearning(entryRootContext: context,),
-          '/entryPage': (context) => const EntryPage(),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => CardSampleProvider())
+        ],
+        builder: (context, child) {
+          final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: false);
+
+          return MaterialApp(title: 'Logopedia App', home: const EntryPage(), routes: {
+            '/startLearning': (context) => StartLearning(entryRootContext: context),
+            '/entryPage': (context) => const EntryPage(),
+            '/recordOwnSample': (context) => const RecordOwnSample(),
+          });
         });
   }
 }

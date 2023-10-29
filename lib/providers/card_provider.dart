@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logopedia/models/card_sample.dart';
 import 'package:logopedia/providers/game_data_provider.dart';
 
 enum WordStatus { correct, incorrect, mid }
@@ -12,7 +13,7 @@ class CardProvider extends ChangeNotifier {
   double _angle = 0;
   bool _isDragging = false;
   Size _screenSize = Size.zero;
-
+  List<CardSample>? additionalCards = [];
 
   List<String> get words => _words;
   List<String> get paths => _paths;
@@ -21,7 +22,7 @@ class CardProvider extends ChangeNotifier {
   bool get isDragging => _isDragging;
   double get angle => _angle;
 
-  CardProvider() {
+  CardProvider({this.additionalCards}) {
     resetWords();
   }
 
@@ -57,7 +58,6 @@ class CardProvider extends ChangeNotifier {
       Fluttertoast.showToast(
         msg: status.toString().split('.').last.toUpperCase(),
       );
-      
     }
 
     switch (status) {
@@ -102,7 +102,7 @@ class CardProvider extends ChangeNotifier {
       return WordStatus.incorrect;
     } else if (y <= -delta / 2 && forceMid) {
       return WordStatus.mid;
-    }else{
+    } else {
       return null;
     }
   }
@@ -148,6 +148,16 @@ class CardProvider extends ChangeNotifier {
     resetPosition();
   }
 
+  void addCards(List<CardSample>? addiitonalCards) {
+    if(addiitonalCards != null){
+      for (CardSample cardSample in addiitonalCards) {
+        _words.add(cardSample.word);
+        _imagePaths.add(cardSample.imagePath);
+        _paths.add(cardSample.exampleAudioPath);
+      }
+    }
+  }
+
   void resetWords() {
     _words = <String>[
       'Piłka',
@@ -157,7 +167,7 @@ class CardProvider extends ChangeNotifier {
       'Ksiądz',
       'Księżniczka',
       'Księga'
-    ].reversed.toList();
+    ];
 
     _paths = <String>[
       'assets/exampleAudios/pilka.mp3',
@@ -167,7 +177,7 @@ class CardProvider extends ChangeNotifier {
       'assets/exampleAudios/ksiadz.mp3',
       'assets/exampleAudios/ksiezniczka.mp3',
       'assets/exampleAudios/ksiega.mp3'
-    ].reversed.toList();
+    ];
 
     _imagePaths = <String>[
       'assets/exampleImages/pilka.jpeg',
@@ -177,7 +187,13 @@ class CardProvider extends ChangeNotifier {
       'assets/exampleImages/ksiadz.jpeg',
       'assets/exampleImages/ksiezniczka.jpeg',
       'assets/exampleImages/ksiega.jpeg'
-    ].reversed.toList();
+    ];
+
+    addCards(additionalCards);
+
+    _words = _words.reversed.toList();
+    _paths = _paths.reversed.toList();
+    _imagePaths = _imagePaths.reversed.toList();
 
     notifyListeners();
   }
