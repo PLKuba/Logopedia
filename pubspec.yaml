@@ -49,6 +49,7 @@ dependencies:
   percent_indicator: ^4.2.2
   fluttertoast: ^8.0.9
   permission_handler: any
+  image_picker: ^0.8.4+4
 
 
 dev_dependencies:

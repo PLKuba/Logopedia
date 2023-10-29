@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logopedia/models/card_sample.dart';
 import 'package:logopedia/providers/game_data_provider.dart';
 
 enum WordStatus { correct, incorrect, mid }
@@ -12,7 +13,6 @@ class CardProvider extends ChangeNotifier {
   double _angle = 0;
   bool _isDragging = false;
   Size _screenSize = Size.zero;
-
 
   List<String> get words => _words;
   List<String> get paths => _paths;
@@ -57,7 +57,6 @@ class CardProvider extends ChangeNotifier {
       Fluttertoast.showToast(
         msg: status.toString().split('.').last.toUpperCase(),
       );
-      
     }
 
     switch (status) {
@@ -73,8 +72,8 @@ class CardProvider extends ChangeNotifier {
         midSwipe();
         gameDataProvider.swipeSummary.addMidSwipe();
         break;
-      default:
-        resetPosition();
+      // default:
+      //   resetPosition();
     }
 
     // resetPosition();
@@ -102,7 +101,7 @@ class CardProvider extends ChangeNotifier {
       return WordStatus.incorrect;
     } else if (y <= -delta / 2 && forceMid) {
       return WordStatus.mid;
-    }else{
+    } else {
       return null;
     }
   }
@@ -141,10 +140,17 @@ class CardProvider extends ChangeNotifier {
   }
 
   Future _nextCard() async {
+    // print([_words.length, _words]);
+    // print([_paths.length, _paths]);
+    // print([_imagePaths.length, _imagePaths]);
     await Future.delayed(const Duration(milliseconds: 200));
     _words.removeLast();
     _paths.removeLast();
     _imagePaths.removeLast();
+
+    // print([_words.length, _words]);
+    // print([_paths.length, _paths]);
+    // print([_imagePaths.length, _imagePaths]);
     resetPosition();
   }
 

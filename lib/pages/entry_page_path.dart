@@ -27,6 +27,15 @@ class EntryPage extends StatelessWidget {
                 child: const Text('Start Learning'),
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(Colors.black),
+              ),),
+              const SizedBox(height: 50,),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/recordOwnSample', (Route<dynamic> route) => false);
+                },
+                child: const Text('Record own sample'),
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.black),
               ),)
         ],
       ),
