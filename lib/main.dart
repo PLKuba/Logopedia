@@ -24,7 +24,7 @@ class EntryRoot extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => CardSampleProvider())
         ],
         builder: (context, child) {
-          final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: false);
+          final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: true);
 
           return MaterialApp(title: 'Logopedia App', home: const EntryPage(), routes: {
             '/startLearning': (context) => StartLearning(entryRootContext: context),

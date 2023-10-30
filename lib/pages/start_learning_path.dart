@@ -18,7 +18,7 @@ class StartLearning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: false);
+    final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: true);
 
     return MultiProvider(
       providers: [

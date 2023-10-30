@@ -52,6 +52,7 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
           const SizedBox(height: 100),
           _wordInputSection(),
           _showPreviewButton(),
+          _submitCardButton(),
           _resetDataButton(),
           _goToMainPage(),
         ],
@@ -140,7 +141,23 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
 
   _showCardPreview() {}
 
-  _submitCard() {}
+  _submitCardButton(){
+    return TextButton(
+      child: const Text("Submit card"),
+      onPressed: () => _submitCard(),
+    );
+  }
+
+  _submitCard() {
+    final _sampleCardProvider = Provider.of<CardSampleProvider>(context, listen: false);
+    String word = "tesWord";
+    String imagePath = "assets/exampleImages/pilka.jpeg";
+    String exampleAudioPath = "assets/exampleAudios/pilka.mp3";
+
+    CardSample _cardSample = CardSample(word: word, imagePath: imagePath, exampleAudioPath: exampleAudioPath);
+
+    _sampleCardProvider.addSampleCard(_cardSample);
+  }
 
   // Future _selectImageWidget(BuildContext context) async {
   //   var image = await _picker.pickImage(source: ImageSource.gallery);
