@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logopedia/models/card_sample.dart';
 import 'package:logopedia/providers/game_data_provider.dart';
 import 'package:logopedia/providers/play_audio_provider.dart';
 import 'package:logopedia/providers/record_audio_provider.dart';
@@ -40,11 +39,11 @@ class StartLearning extends StatelessWidget {
   }
 
   Widget buildCards(BuildContext context) {
-    final provider = Provider.of<CardProvider>(context, listen: true);
+    final cardProvider = Provider.of<CardProvider>(context, listen: true);
 
-    final words = provider.words;
-    final paths = provider.paths;
-    final imagePaths = provider.imagePaths;
+    final words = cardProvider.words;
+    final paths = cardProvider.paths;
+    final imagePaths = cardProvider.imagePaths;
 
     return words.isEmpty
         ? GameSummaryPage(

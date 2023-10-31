@@ -338,8 +338,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   }
 
   _resetButton() {
-    final _recordProvider =
-        Provider.of<RecordAudioProviders>(context, listen: false);
+    final _recordProvider = Provider.of<RecordAudioProviders>(context, listen: false);
 
     return InkWell(
       onTap: () => _recordProvider.clearOldData(),
