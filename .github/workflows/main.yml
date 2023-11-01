@@ -1,14 +1,12 @@
 on:
-  pull_request:
-    branches:
-      - '**'
   push:
     branches:
-      - '**'
-name: "IOS Build"
+      - 'master'
+
+name: "IOS Build & Release"
 jobs:
   build:
-    name: "IOS Build"
+    name: "IOS Build & Release"
     runs-on: macos-latest
     steps:
       -uses: actions/checkout@v2
@@ -24,7 +22,7 @@ jobs:
         run: flutter test
       -name: "Build IOS"
         # run: flutter build ios --release --no-codesign
-        run: flutter build apd --debug --split-per-abi
+        run: flutter build apk --debug --split-per-abi
       -name: "Push to release"
         uses: ncipollo/release-action@v1
         with:
