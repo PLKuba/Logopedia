@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logopedia/providers/card_sample_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:logopedia/main.dart';
 import 'package:logopedia/providers/record_audio_provider.dart';
 import 'package:logopedia/providers/play_audio_provider.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:logopedia/services/toast_services.dart';
 
 class CreateSampleCardScreen extends StatefulWidget {
   const CreateSampleCardScreen({Key? key}) : super(key: key);
@@ -49,7 +49,8 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
           _recordProvider.recordingOutputPath.isEmpty
               ? _recordingSection()
               : _audioPlayingSection(),
-          _showPreviewButton(),
+          const SizedBox(height: 50),
+          // _showPreviewButton(),
           _submitCardButton(),
           _resetDataButton(),
           _goToMainPage(),
@@ -65,7 +66,10 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
         ),
         onPressed: () => _pickImage(),
         child: currentImagePath == ""
-            ? const Text('Upload photo')
+            ? const Text(
+                'Dodaj zdjęcie',
+                style: TextStyle(color: Colors.black),
+              )
             : CircleAvatar(
                 radius: 100.0,
                 backgroundImage: FileImage(File(selectedImage.path)),
@@ -79,8 +83,21 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: TextField(
+          cursorColor: Colors.black,
           controller: _textController,
-          decoration: const InputDecoration(labelText: 'Enter word e.g Ball'),
+          decoration: InputDecoration(
+            labelText: 'Podaj słówko np. okno',
+            labelStyle: const TextStyle(color: Colors.black),
+            fillColor: Colors.red,
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.black, width: 2.0),
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.black, width: 2.0),
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+          ),
         ),
       ),
     );
@@ -127,7 +144,8 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
   }
 
   _audioPlayingSection() {
-    final _recordProvider = Provider.of<RecordAudioProviders>(context);
+    final _recordProvider =
+        Provider.of<RecordAudioProviders>(context, listen: false);
 
     return Container(
         width: MediaQuery.of(context).size.width - 110,
@@ -147,8 +165,13 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
   }
 
   _audioContollingSection(String songPath) {
-    final _playProvider = Provider.of<PlayAudioProvider>(context);
-    final _playProviderWithoutListeners = Provider.of<PlayAudioProvider>(context, listen: false);
+    final _playProvider = Provider.of<PlayAudioProvider>(context, listen: true);
+    final _playProviderWithoutListeners =
+        Provider.of<PlayAudioProvider>(context, listen: false);
+
+    if (songPath.isNotEmpty) {
+      currentAudioPath = songPath;
+    }
 
     return IconButton(
         onPressed: () async {
@@ -164,7 +187,7 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
   }
 
   _audioProgressSection() {
-    final _playProvider = Provider.of<PlayAudioProvider>(context);
+    final _playProvider = Provider.of<PlayAudioProvider>(context, listen: true);
 
     return Expanded(
       child: Container(
@@ -185,9 +208,23 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
   }
 
   _showPreviewButton() {
-    return TextButton(
-      child: const Text("Preview card"),
-      onPressed: () => _showCardPreview(),
+    return Center(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black, elevation: 1),
+        child: const Text("Show card preview"),
+        onPressed: () {
+          if (_validateData()) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                actions: [_showCardPreview()],
+                contentPadding: const EdgeInsets.all(20),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -204,7 +241,10 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
 
   _resetDataButton() {
     return TextButton(
-      child: const Text("Reset data"),
+      child: const Text(
+        "Zresetuj dane",
+        style: TextStyle(color: Colors.black),
+      ),
       onPressed: () => _resetData(),
     );
   }
@@ -212,15 +252,78 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
   _goToMainPage() {
     return IconButton(
         icon: const Icon(Icons.arrow_back_ios),
-        onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const EntryRoot(),
-            )));
+        onPressed: () => Navigator.of(context).pop('recordOwnSample'));
+  }
+
+  _showCardPreview() {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: MediaQuery.of(context).size.height * 0.51,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(children: [
+          _displayRoundImageSection(),
+          const SizedBox(height: 20),
+          Text(
+            _textController.text,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          const SizedBox(height: 40),
+          _audioPlayingSection(),
+          const SizedBox(height: 35),
+          _submitCardButton(),
+        ]),
+      ),
+    );
+  }
+
+  _submitCardButton() {
+    return OutlinedButton(
+      onPressed: () => _submitCard(),
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+      ),
+      child: const Text(
+        "Dodaj kartę",
+        style: TextStyle(color: Colors.black),
+      ),
+    );
+  }
+
+  _submitCard() {
+    if (_validateData()) {
+      final _sampleCardProvider =
+          Provider.of<CardSampleProvider>(context, listen: false);
+      final _recordProvider =
+          Provider.of<RecordAudioProviders>(context, listen: false);
+
+      currentWord = _textController.text;
+      currentImagePath = selectedImage.path;
+      currentAudioPath = _recordProvider.recordingOutputPath;
+
+      CardSample _cardSample = CardSample(
+          word: currentWord,
+          imagePath: currentImagePath,
+          exampleAudioPath: currentAudioPath);
+
+      _sampleCardProvider.addSampleCard(_cardSample);
+
+      _resetData();
+
+      // Navigator.pop(context);
+
+      showToast("Karta dodana poprawnie");
+    }
   }
 
   _resetData() {
-    final _recordProvider = Provider.of<RecordAudioProviders>(context, listen: false);
+    final _recordProvider =
+        Provider.of<RecordAudioProviders>(context, listen: false);
 
     _recordProvider.clearOldData();
     _textController.clear();
@@ -229,34 +332,21 @@ class _CreateSampleCardScreen extends State<CreateSampleCardScreen> {
     currentAudioPath = "";
     currentImagePath = "";
 
-    // Image.memory(File(currentImagePath).readAsBytesSync());
     selectedImage = File("");
+
+    showToast("Dane zresetowane");
   }
 
-  _showCardPreview() {}
+  _validateData() {
+    final _recordProvider =
+        Provider.of<RecordAudioProviders>(context, listen: false);
 
-  _submitCardButton() {
-    return TextButton(
-      child: const Text("Submit card"),
-      onPressed: () => _submitCard(),
-    );
-  }
-
-  _submitCard() {
-    final _sampleCardProvider = Provider.of<CardSampleProvider>(context, listen: false);
-    final _recordProvider = Provider.of<RecordAudioProviders>(context, listen: false);
-
-    currentWord = _textController.text;
-    currentImagePath = selectedImage.path;
-    currentAudioPath = _recordProvider.recordingOutputPath;
-
-    CardSample _cardSample = CardSample(
-        word: currentWord,
-        imagePath: currentImagePath,
-        exampleAudioPath: currentAudioPath);
-
-    _sampleCardProvider.addSampleCard(_cardSample);
-
-    _resetData();
+    if (_textController.text == "" ||
+        _recordProvider.recordingOutputPath == "" ||
+        currentImagePath == "") {
+      showToast("Brakujące dane");
+      return false;
+    }
+    return true;
   }
 }

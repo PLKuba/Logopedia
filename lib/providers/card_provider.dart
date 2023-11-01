@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logopedia/models/card_sample.dart';
 import 'package:logopedia/providers/game_data_provider.dart';
 
-enum WordStatus { correct, incorrect, mid }
+enum WordStatus { poprawne, niepoprawne, niezbyt }
 
 class CardProvider extends ChangeNotifier {
   List<String> _words = [];
@@ -61,15 +61,15 @@ class CardProvider extends ChangeNotifier {
     }
 
     switch (status) {
-      case WordStatus.correct:
+      case WordStatus.poprawne:
         correctSwipe();
         gameDataProvider.swipeSummary.addCorrectSwipe();
         break;
-      case WordStatus.incorrect:
+      case WordStatus.niepoprawne:
         incorrectSwipe();
         gameDataProvider.swipeSummary.addIncorrectSwipe();
         break;
-      case WordStatus.mid:
+      case WordStatus.niezbyt:
         midSwipe();
         gameDataProvider.swipeSummary.addMidSwipe();
         break;
@@ -93,15 +93,15 @@ class CardProvider extends ChangeNotifier {
     final x = _position.dx;
     final y = _position.dy;
     final forceMid = x.abs() < 20;
-    const delta = 200;
+    const delta = 130;
 
     // print('x: $x, delta: $delta');
     if (x >= delta) {
-      return WordStatus.correct;
+      return WordStatus.poprawne;
     } else if (x <= -delta) {
-      return WordStatus.incorrect;
+      return WordStatus.niepoprawne;
     } else if (y <= -delta / 2 && forceMid) {
-      return WordStatus.mid;
+      return WordStatus.niezbyt;
     } else {
       return null;
     }
@@ -160,33 +160,42 @@ class CardProvider extends ChangeNotifier {
 
   void resetWords() {
     _words = <String>[
-      'Piłka',
-      'Czapka',
-      'Czepek',
-      'Książka',
-      'Ksiądz',
-      'Księżniczka',
-      'Księga'
+      'Szabla',
+      'Szafa',
+      'Szalik',
+      'Szampon',
+      'Szopa',
+      'Szuflada',
+      'Szuka',
+      'Szumi',
+      'Szyba',
+      'Szykuje'
     ];
 
     _paths = <String>[
-      'assets/exampleAudios/pilka.mp3',
-      'assets/exampleAudios/czapka.mp3',
-      'assets/exampleAudios/czepek.mp3',
-      'assets/exampleAudios/ksiazka.mp3',
-      'assets/exampleAudios/ksiadz.mp3',
-      'assets/exampleAudios/ksiezniczka.mp3',
-      'assets/exampleAudios/ksiega.mp3'
+      'assets/exampleAudios/szabla.mp3',
+      'assets/exampleAudios/szafa.mp3',
+      'assets/exampleAudios/szalik.mp3',
+      'assets/exampleAudios/szampon.mp3',
+      'assets/exampleAudios/szopa.mp3',
+      'assets/exampleAudios/szuflada.mp3',
+      'assets/exampleAudios/szuka.mp3',
+      'assets/exampleAudios/szumi.mp3',
+      'assets/exampleAudios/szyba.mp3',
+      'assets/exampleAudios/szykuje.mp3'
     ];
 
     _imagePaths = <String>[
-      'assets/exampleImages/pilka.jpeg',
-      'assets/exampleImages/czapka.jpeg',
-      'assets/exampleImages/czepek.jpeg',
-      'assets/exampleImages/ksiazka.jpeg',
-      'assets/exampleImages/ksiadz.jpeg',
-      'assets/exampleImages/ksiezniczka.jpeg',
-      'assets/exampleImages/ksiega.jpeg'
+      'assets/exampleImages/szabla.jpeg',
+      'assets/exampleImages/szafa.jpeg',
+      'assets/exampleImages/szalik.jpeg',
+      'assets/exampleImages/szampon.jpeg',
+      'assets/exampleImages/szopa.jpeg',
+      'assets/exampleImages/szuflada.jpeg',
+      'assets/exampleImages/szuka.jpeg',
+      'assets/exampleImages/szumi.jpeg',
+      'assets/exampleImages/szyba.jpeg',
+      'assets/exampleImages/szykuje.jpeg'
     ];
 
     addCards(additionalCards);

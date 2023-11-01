@@ -9,7 +9,7 @@ class RecordOwnSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: recordOwnSample(context));
+    return recordOwnSample(context);
   }
 
   Widget recordOwnSample(BuildContext context) {

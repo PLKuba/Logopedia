@@ -104,41 +104,45 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-              // border: Border.all(
-              //   color: Colors.red,
-              //   width: 2,
-              // ),
-              ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _displayImageSection(),
-              if (_recordProvider.recordingOutputPath.isNotEmpty)
-                _playExampleHeading(),
-              const SizedBox(height: 50),
-              if (_recordProvider.recordingOutputPath.isNotEmpty)
-                _exampleAudioPlayingSection(),
-              const SizedBox(height: 20),
-              _recordProvider.recordingOutputPath.isEmpty
-                  ? _recordHeading()
-                  : _playAudioHeading(),
-              const SizedBox(height: 50),
-              _recordProvider.recordingOutputPath.isEmpty
-                  ? _recordingSection()
-                  : _audioPlayingSection(),
-              if (_recordProvider.recordingOutputPath.isNotEmpty &&
-                  !_playProvider.isSongPlaying)
+      body: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.95,
+          height: MediaQuery.of(context).size.height,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10)
+                ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _displayImageSection(),
+                if (_recordProvider.recordingOutputPath.isNotEmpty)
+                  _playExampleHeading(),
                 const SizedBox(height: 50),
-              if (_recordProvider.recordingOutputPath.isNotEmpty &&
-                  !_playProvider.isSongPlaying &&
-                  !_playExampleProvider.isSongPlaying)
-                _resetButton()
-            ],
+                if (_recordProvider.recordingOutputPath.isNotEmpty)
+                  _exampleAudioPlayingSection(),
+                const SizedBox(height: 20),
+                _recordProvider.recordingOutputPath.isEmpty
+                    ? _recordHeading()
+                    : _playAudioHeading(),
+                const SizedBox(height: 50),
+                _recordProvider.recordingOutputPath.isEmpty
+                    ? _recordingSection()
+                    : _audioPlayingSection(),
+                if (_recordProvider.recordingOutputPath.isNotEmpty &&
+                    !_playProvider.isSongPlaying)
+                  const SizedBox(height: 50),
+                if (_recordProvider.recordingOutputPath.isNotEmpty &&
+                    !_playProvider.isSongPlaying &&
+                    !_playExampleProvider.isSongPlaying)
+                  _resetButton()
+              ],
+            ),
           ),
         ),
       ),
@@ -152,7 +156,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   _playExampleHeading() {
     return const Center(
       child: Text(
-        'Ideal pronunciation',
+        'Idealna wymowa',
         style: TextStyle(
             fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
       ),
@@ -192,7 +196,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   _playAudioHeading() {
     return const Center(
       child: Text(
-        'Your version',
+        'Twoje nagranie',
         style: TextStyle(
             fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
       ),
@@ -261,9 +265,8 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
 
   _exampleAudioContollingSection(String songPath) {
     final _playProvider = Provider.of<PlayExampleAudioProvider>(context);
-    final _playProviderWithoutListeners =
-        Provider.of<PlayExampleAudioProvider>(context, listen: false);
-    // print(widget.path);
+    final _playProviderWithoutListeners = Provider.of<PlayExampleAudioProvider>(context, listen: false);
+
     return IconButton(
         onPressed: () async {
           if (songPath.isEmpty) return;
@@ -358,7 +361,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
               Icon(Icons.refresh_outlined, color: Colors.white, size: 30),
               SizedBox(width: 10),
               Text(
-                'Reset',
+                'Zresetuj',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

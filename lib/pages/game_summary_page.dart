@@ -14,24 +14,20 @@ class GameSummaryPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Game summary page'),
-          Text('Correct Swipes: ${swipeSummary.correctCount}'),
-          Text('Mid Swipes: ${swipeSummary.midCount}'),
-          Text('Incorrect Swipes: ${swipeSummary.incorrectCount}'),
+          const Text('Podsumowanie'),
+          Text('Poprawnych słówek: ${swipeSummary.correctCount}'),
+          Text('Średnio poprawne: ${swipeSummary.midCount}'),
+          Text('Niepoprawne słówka: ${swipeSummary.incorrectCount}'),
           ElevatedButton(
               onPressed: () {
-                Navigator.of(entryRootContext).pushNamedAndRemoveUntil(
-                    '/entryPage', (Route<dynamic> route) => false); // this will move me back to entry page
-                    // add route to entry page
+                Navigator.of(entryRootContext).pushNamed('/');
               },
-              child: const Text('Go back to main page')),
+              child: const Text('Powrót do menu głównego')),
           ElevatedButton(
               onPressed: () {
-                Navigator.of(entryRootContext).pushNamedAndRemoveUntil(
-                    '/startLearning', (Route<dynamic> route) => false); // this will move me back to the start of the swiping game
-                    // add route to entry page
+                Navigator.of(entryRootContext).pushNamed('/startLearning');
               },
-              child: const Text('Try again'))
+              child: const Text('Spróbuj ponownie'))
         ],
       ),
     );

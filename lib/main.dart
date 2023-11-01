@@ -8,29 +8,26 @@ import 'package:logopedia/models/card_sample.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      home: EntryRoot(),
-    ),
+    const Logopedia(),
   );
 }
 
-class EntryRoot extends StatelessWidget {
-  const EntryRoot({Key? key}) : super(key: key);
+class Logopedia extends StatelessWidget {
+  const Logopedia({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => CardSampleProvider())
-        ],
-        builder: (context, child) {
-          final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: true);
-
-          return MaterialApp(title: 'Logopedia App', home: const EntryPage(), routes: {
+    return ChangeNotifierProvider( 
+      create: (_) => CardSampleProvider(), 
+      child: MaterialApp(
+        title: 'Logopedia App', 
+        initialRoute: '/', 
+        routes: {
+            '/': (context) => const EntryPage(),
             '/startLearning': (context) => StartLearning(entryRootContext: context),
-            '/entryPage': (context) => const EntryPage(),
             '/recordOwnSample': (context) => const RecordOwnSample(),
-          });
-        });
+          },
+        ),
+      );
   }
 }

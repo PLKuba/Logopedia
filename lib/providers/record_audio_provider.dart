@@ -35,7 +35,7 @@ class RecordAudioProviders extends ChangeNotifier {
     _isrecording = true;
     notifyListeners();
 
-    showToast('Recording started');
+    showToast('Nagrywanie rozpoczęte');
   }
 
   stopRecording() async {
@@ -43,7 +43,7 @@ class RecordAudioProviders extends ChangeNotifier {
 
     if (await _record.isRecording()) {
       _audioFilePath = await _record.stop();
-      showToast('Recording stopped');
+      showToast('Nagrywanie zakończone');
     }
 
     _isrecording = false;

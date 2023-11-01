@@ -22,18 +22,18 @@ class EntryPage extends StatelessWidget {
               const SizedBox(height: 50,),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/startLearning', (Route<dynamic> route) => false);
+                  Navigator.of(context).pushNamed('/startLearning');
                 },
-                child: const Text('Start Learning'),
+                child: const Text('Rozpocznij grę'),
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(Colors.black),
               ),),
               const SizedBox(height: 50,),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/recordOwnSample', (Route<dynamic> route) => false);
+                  Navigator.of(context).pushNamed('/recordOwnSample');
                 },
-                child: const Text('Record own sample'),
+                child: const Text('Dodaj własne słówko'),
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(Colors.black),
               ),)

@@ -17,17 +17,15 @@ class StartLearning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: true);
+    final _cardSampleProvider = Provider.of<CardSampleProvider>(context, listen: false);
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<GameDataProvider>(
-            create: (_) => GameDataProvider(swipeSummary: swipeSummary)),
-        ChangeNotifierProvider<CardProvider>(
-            create: (_) => CardProvider(additionalCards: _cardSampleProvider.additionalCards)),
+        ChangeNotifierProvider<GameDataProvider>(create: (_) => GameDataProvider(swipeSummary: swipeSummary)),
+        ChangeNotifierProvider<CardProvider>(create: (_) => CardProvider(additionalCards: _cardSampleProvider.additionalCards)),
       ],
       builder: (context, child) {
-        return MaterialApp(home: startLearning(context));
+        return startLearning(context);
       },
     );
   }
