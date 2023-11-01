@@ -1,0 +1,33 @@
+on:
+  pull_request:
+    branches:
+      - '**'
+  push:
+    branches:
+      - '**'
+name: "IOS Build"
+jobs:
+  build:
+    name: "IOS Build"
+    runs-on: macos-latest
+    steps:
+      -uses: actions/checkout@v2
+      -uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      -uses: subosito/flutter-actions@v1
+        with:
+          flutter-version: '2.2.0' # 3.13.6
+      -name: "Get Packages"
+        run: flutter pub get
+      -name: "Flutter Test"
+        run: flutter test
+      -name: "Build IOS"
+        # run: flutter build ios --release --no-codesign
+        run: flutter build apd --debug --split-per-abi
+      -name: "Push to release"
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*."
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.LOGOPEDIA_BUILD_RELEASE }}
